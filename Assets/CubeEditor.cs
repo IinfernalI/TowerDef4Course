@@ -20,9 +20,12 @@ public class CubeEditor : MonoBehaviour
         snapPos.y = 0f;
         snapPos.z = Mathf.RoundToInt(transform.position.z / gridSize) * gridSize;
 
-        transform.position = snapPos;
+        transform.position = snapPos; //кладем назад
         
+        //берем компонент потомка текст меш
         lebel = GetComponentInChildren<TextMesh>();
-        lebel.text = "X-" + snapPos.x/gridSize + "," + "Z-" +snapPos.z/gridSize;
+        string labelName = "X-" + snapPos.x / gridSize + "," + "Z-" + snapPos.z / gridSize;
+        lebel.text = labelName;
+        gameObject.name = labelName;
     }
 }
