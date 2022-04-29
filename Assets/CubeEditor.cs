@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class SnapToGrid : MonoBehaviour
+public class CubeEditor : MonoBehaviour
 {
+    
+    //атрибут показа    ползунок                 размер сетки 
     [SerializeField] [Range(1f,20f)] private int gridSize = 10;
+
+    private TextMesh lebel;
     void Update()
     {
+        
+        
         Vector3 snapPos;
 
         snapPos.x = Mathf.RoundToInt(transform.position.x/gridSize) * gridSize; //формула перемещения по сетке
@@ -15,5 +21,8 @@ public class SnapToGrid : MonoBehaviour
         snapPos.z = Mathf.RoundToInt(transform.position.z / gridSize) * gridSize;
 
         transform.position = snapPos;
+        
+        lebel = GetComponentInChildren<TextMesh>();
+        lebel.text = "X-" + snapPos.x/gridSize + "," + "Z-" +snapPos.z/gridSize;
     }
 }
