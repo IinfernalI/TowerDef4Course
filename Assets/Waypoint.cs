@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class Waypoint : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private Vector2Int gridPos;
+    
+    //размер сетки 
+    private const int gridSize = 10;
+
+    public int GetGridSize()
     {
-        
+        return gridSize;
     }
 
-    // Update is called once per frame
-    void Update()
+    public Vector2Int GetGridPos()
     {
-        
+        return new Vector2Int(
+            Mathf.RoundToInt(transform.position.x / gridSize), //формула перемещения по сетке
+            Mathf.RoundToInt(transform.position.z / gridSize)
+        );
     }
+    
 }

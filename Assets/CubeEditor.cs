@@ -1,31 +1,42 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 [ExecuteInEditMode]
+[RequireComponent(typeof(Waypoint))]
 public class CubeEditor : MonoBehaviour
 {
-    
-    //атрибут показа    ползунок                 размер сетки 
-    [SerializeField] [Range(1f,20f)] private int gridSize = 10;
+    private Waypoint _waypoint;
 
-    private TextMesh lebel;
+    private void Awake()
+    {
+        _waypoint = GetComponent<Waypoint>();
+    }
+
     void Update()
     {
         
+        SnapToGrid();
+        UpdateLabel();
         
-        Vector3 snapPos;
+    }
 
-        snapPos.x = Mathf.RoundToInt(transform.position.x/gridSize) * gridSize; //формула перемещения по сетке
-        snapPos.y = 0f;
-        snapPos.z = Mathf.RoundToInt(transform.position.z / gridSize) * gridSize;
-
-        transform.position = snapPos; //кладем назад
-        
+    private void UpdateLabel()
+    {
+        int gridSize = _waypoint.GetGridSize();
         //берем компонент потомка текст меш
-        lebel = GetComponentInChildren<TextMesh>();
-        string labelName = "X-" + snapPos.x / gridSize + "," + "Z-" + snapPos.z / gridSize;
+        TextMesh lebel = GetComponentInChildren<TextMesh>();
+        string labelName = "X-" + _waypoint.GetGridPos().x + "," + "Z-" + _waypoint.GetGridPos().y;
         lebel.text = labelName; //зарисовка самих кубов
         gameObject.name = labelName; //зарисовка каждого куба в меню
+    }
+
+    private void SnapToGrid()
+    {
+        int gridSize = _waypoint.GetGridSize();
+
+        transform.position = new Vector3(_waypoint.GetGridPos().x * gridSize,0f,_waypoint.GetGridPos().y * gridSize); //кладем назад
     }
 }
