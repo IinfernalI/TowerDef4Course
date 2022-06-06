@@ -3,15 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class EnemyMovement : MonoBehaviour
 {
-    // Start is called before the first frame update
+    
     [SerializeField] private List<Waypoint> waypoints;
+    
     void Start()
     {
         PrintWaypointName();
         /*InvokeRepeating("PrintWaypointName",0f,1f);*/
         StartCoroutine(PrintWaypointName());
+        
     }
 
     IEnumerator PrintWaypointName()

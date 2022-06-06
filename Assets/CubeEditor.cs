@@ -25,7 +25,7 @@ public class CubeEditor : MonoBehaviour
         //берем компонент потомка текст меш
         lebel = GetComponentInChildren<TextMesh>();
         string labelName = "X-" + snapPos.x / gridSize + "," + "Z-" + snapPos.z / gridSize;
-        lebel.text = labelName;
-        gameObject.name = labelName;
+        lebel.text = labelName; //зарисовка самих кубов
+        gameObject.name = labelName; //зарисовка каждого куба в меню
     }
 }
