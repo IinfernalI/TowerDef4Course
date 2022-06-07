@@ -17,10 +17,8 @@ public class CubeEditor : MonoBehaviour
 
     void Update()
     {
-        
         SnapToGrid();
         UpdateLabel();
-        
     }
 
     private void UpdateLabel()
@@ -36,7 +34,6 @@ public class CubeEditor : MonoBehaviour
     private void SnapToGrid()
     {
         int gridSize = _waypoint.GetGridSize();
-
-        transform.position = new Vector3(_waypoint.GetGridPos().x * gridSize,0f,_waypoint.GetGridPos().y * gridSize); //кладем назад
+        transform.position = new Vector3(_waypoint.GetGridPos().x * gridSize,0f,_waypoint.GetGridPos().y * gridSize); //работа сетки
     }
 }
