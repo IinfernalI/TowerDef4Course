@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,10 +8,44 @@ public class PathFinder : MonoBehaviour
     [SerializeField] private Waypoint startPoint;
     [SerializeField] private Waypoint finishPoint;
     private Dictionary<Vector2Int, Waypoint> grid = new Dictionary<Vector2Int, Waypoint>();
+
+    private Vector2Int[] directions = new[]
+    {
+        /*new Vector2Int(0,10),
+        new Vector2Int(10,0),
+        new Vector2Int(0,-10),
+        new Vector2Int(-10,0),*/
+        
+        Vector2Int.up,
+        Vector2Int.right,
+        Vector2Int.down,
+        Vector2Int.left
+    };
     void Start()
     {
         LoadBlocks();
         SetColorStartAndEnd();
+        ExploreNearPoints();
+    }
+
+    private void ExploreNearPoints()
+    {
+        foreach (Vector2Int direction in directions)
+        {
+            /*Vector3 movement1 = startPoint.transform.position + new Vector3(direction.x, 0f, direction.y);
+            print($"иследовали позицию x{movement1.x/10} и z{movement1.z/10}");*/
+            
+            Vector2Int nearPointCoordinates = startPoint.GetGridPos() + direction;
+            try
+            {
+                grid[nearPointCoordinates].SetTopColor(Color.yellow);
+            }
+            catch 
+            {
+                Debug.LogWarning($"Блок : {nearPointCoordinates} не существует!");
+            }
+            print($"иследовали позицию x{nearPointCoordinates.x} и z{nearPointCoordinates.y}");
+        }
     }
 
     private void LoadBlocks()
@@ -26,28 +61,6 @@ public class PathFinder : MonoBehaviour
             else
             {
                 grid.Add(gridPos, waypoint);
-                /*foreach (KeyValuePair<Vector2Int,Waypoint> waipoints in grid)
-                {
-                    KeyValuePair<Vector2Int,Waypoint> start1 = waipoints;
-                    if (start1.Key.x < waipoints.Key.x && start1.Key.y <= waipoints.Key.y)
-                    {
-                        if (start1.Key.x <= waipoints.Key.x && start1.Key.y < waipoints.Key.y)
-                        {
-                            start1 = waipoints;
-                        }
-                        else
-                        {
-                            start1 = waipoints;
-                        }
-                    }
-                    else
-                    {
-                        continue;
-                    }
-                    //start1.Value.SetTopColor(Color.black);
-                    //waypoint.SetTopColor(Color.black);
-                    
-                }*/
             }
         }
     }
@@ -58,7 +71,6 @@ public class PathFinder : MonoBehaviour
         finishPoint.SetTopColor(Color.red);
     }
     
-    // Update is called once per frame
     void Update()
     {
         
