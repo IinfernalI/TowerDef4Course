@@ -37,12 +37,11 @@ public class PathFinder : MonoBehaviour
         _queue.Enqueue(startPoint);
         while(_queue.Count > 0 && _isRunning == true)
         {
-            print("FINISH!!!!!!!!!!!");
             Waypoint searchPoint = _queue.Dequeue();
+            searchPoint.isExplored = true;
             CheckForEndPoint(searchPoint);
             ExploreNearPoints(searchPoint);
             print("Поиск завершен?");
-            
         }
         
     }
@@ -63,31 +62,38 @@ public class PathFinder : MonoBehaviour
 
     private void ExploreNearPoints(Waypoint from)
     {
-        
         if (!_isRunning) { return; }
-        
+        else
+        {
+            
             foreach (Vector2Int direction in directions)
             {
-                /*Vector3 movement1 = startPoint.transform.position + new Vector3(direction.x, 0f, direction.y);
-                print($"иследовали позицию x{movement1.x/10} и z{movement1.z/10}");*/
-            
                 Vector2Int nearPointCoordinates = from.GetGridPos() + direction;
+               
                 try
                 {
                     Waypoint nearPoint = grid[nearPointCoordinates];
-                    nearPoint.SetTopColor(Color.yellow);
-                    _queue.Enqueue(nearPoint);
-                    print($"Добавить в очередь - {nearPoint}");
+                    AddPointToQueue(nearPoint);
                 }
-                catch 
-                {
-                    Debug.LogWarning($"Блок : {nearPointCoordinates} не существует!");
-                }
-                print($"иследовали позицию x{nearPointCoordinates.x} z{nearPointCoordinates.y}");
+                catch { Debug.LogWarning($"Блок : {nearPointCoordinates} не существует!"); }
             }
-        
+        }
     }
 
+    private void AddPointToQueue(Waypoint nearPoint)
+    {
+        if (nearPoint.isExplored)
+        {
+            return;
+        }
+        else
+        {
+            nearPoint.SetTopColor(Color.yellow);
+            _queue.Enqueue(nearPoint);
+            print($"Добавить в очередь - {nearPoint}");
+        }
+    }
+    
     private void LoadBlocks()
     {
         var waypoints = FindObjectsOfType<Waypoint>();
