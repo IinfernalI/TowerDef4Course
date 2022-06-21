@@ -9,6 +9,9 @@ public class PathFinder : MonoBehaviour
     [SerializeField] private Waypoint finishPoint;
     private Dictionary<Vector2Int, Waypoint> grid = new Dictionary<Vector2Int, Waypoint>();
 
+    private Queue<Waypoint> _queue = new Queue<Waypoint>();
+    private bool _isRunning = true;
+
     private Vector2Int[] directions = new[]
     {
         /*new Vector2Int(0,10),
@@ -25,27 +28,64 @@ public class PathFinder : MonoBehaviour
     {
         LoadBlocks();
         SetColorStartAndEnd();
-        ExploreNearPoints();
+        //ExploreNearPoints();
+        PathFind();
     }
 
-    private void ExploreNearPoints()
+    private void PathFind()
     {
-        foreach (Vector2Int direction in directions)
+        _queue.Enqueue(startPoint);
+        while(_queue.Count > 0 && _isRunning == true)
         {
-            /*Vector3 movement1 = startPoint.transform.position + new Vector3(direction.x, 0f, direction.y);
-            print($"иследовали позицию x{movement1.x/10} и z{movement1.z/10}");*/
+            print("FINISH!!!!!!!!!!!");
+            Waypoint searchPoint = _queue.Dequeue();
+            CheckForEndPoint(searchPoint);
+            ExploreNearPoints(searchPoint);
+            print("Поиск завершен?");
             
-            Vector2Int nearPointCoordinates = startPoint.GetGridPos() + direction;
-            try
-            {
-                grid[nearPointCoordinates].SetTopColor(Color.yellow);
-            }
-            catch 
-            {
-                Debug.LogWarning($"Блок : {nearPointCoordinates} не существует!");
-            }
-            print($"иследовали позицию x{nearPointCoordinates.x} и z{nearPointCoordinates.y}");
         }
+        
+    }
+
+    private void CheckForEndPoint(Waypoint searchPoint)
+    {
+        if (searchPoint == finishPoint)
+        {
+            print($"{searchPoint} являеться конечной точкой");
+            _isRunning = false;
+        }
+        else
+        {
+            print($"{searchPoint} не являеться последней точкой");
+            _isRunning = true;
+        }
+    }
+
+    private void ExploreNearPoints(Waypoint from)
+    {
+        
+        if (!_isRunning) { return; }
+        
+            foreach (Vector2Int direction in directions)
+            {
+                /*Vector3 movement1 = startPoint.transform.position + new Vector3(direction.x, 0f, direction.y);
+                print($"иследовали позицию x{movement1.x/10} и z{movement1.z/10}");*/
+            
+                Vector2Int nearPointCoordinates = from.GetGridPos() + direction;
+                try
+                {
+                    Waypoint nearPoint = grid[nearPointCoordinates];
+                    nearPoint.SetTopColor(Color.yellow);
+                    _queue.Enqueue(nearPoint);
+                    print($"Добавить в очередь - {nearPoint}");
+                }
+                catch 
+                {
+                    Debug.LogWarning($"Блок : {nearPointCoordinates} не существует!");
+                }
+                print($"иследовали позицию x{nearPointCoordinates.x} z{nearPointCoordinates.y}");
+            }
+        
     }
 
     private void LoadBlocks()
