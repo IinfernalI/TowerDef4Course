@@ -8,9 +8,9 @@ using UnityEngine;
 [RequireComponent(typeof(Waypoint))]
 public class CubeEditor : MonoBehaviour
 {
-    private Waypoint _waypoint;
+    Waypoint _waypoint;
 
-    private void Awake()
+    void Awake()
     {
         _waypoint = GetComponent<Waypoint>();
     }
@@ -20,20 +20,20 @@ public class CubeEditor : MonoBehaviour
         SnapToGrid();
         UpdateLabel();
     }
-
-    private void UpdateLabel()
+    
+    void SnapToGrid()
     {
         int gridSize = _waypoint.GetGridSize();
-        //берем компонент потомка текст меш
-        TextMesh lebel = GetComponentInChildren<TextMesh>();
+        transform.position = new Vector3(_waypoint.GetGridPos().x * gridSize,0f,_waypoint.GetGridPos().y * gridSize); //работа сетки
+    }
+    
+    void UpdateLabel()
+    {
+        TextMesh lebel = GetComponentInChildren<TextMesh>(); //берем компонент потомка текст меш
         string labelName = "X" + _waypoint.GetGridPos().x + "," + "Z" + _waypoint.GetGridPos().y;
         lebel.text = labelName; //зарисовка самих кубов
         gameObject.name = labelName; //зарисовка каждого куба в меню
     }
 
-    private void SnapToGrid()
-    {
-        int gridSize = _waypoint.GetGridSize();
-        transform.position = new Vector3(_waypoint.GetGridPos().x * gridSize,0f,_waypoint.GetGridPos().y * gridSize); //работа сетки
-    }
+    
 }

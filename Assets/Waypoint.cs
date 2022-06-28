@@ -6,22 +6,13 @@ using UnityEngine.PlayerLoop;
 
 public class Waypoint : MonoBehaviour
 {
-    /*[SerializeField] private Color exploredColor = Color.yellow;*/
     public Waypoint exploredFrom;
     public bool isExplored = false;
-    private Vector2Int gridPos;
+    Vector2Int gridPos;
     
     //размер сетки 
-    private const int gridSize = 10;
-
-    public void Update()
-    {
-        /*if (isExplored)
-        {
-            SetTopColor(exploredColor);
-        }*/
-    }
-
+    const int gridSize = 10;
+    
     public int GetGridSize()
     {
         return gridSize;

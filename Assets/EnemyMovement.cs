@@ -7,7 +7,8 @@ using UnityEngine.Serialization;
 
 public class EnemyMovement : MonoBehaviour
 {
-    private PathFinder _pathFinder;
+    PathFinder _pathFinder;
+    
     void Start()
     {
         _pathFinder = FindObjectOfType<PathFinder>();

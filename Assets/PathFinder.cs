@@ -19,7 +19,7 @@ public class PathFinder : MonoBehaviour
     List<Waypoint> path = new List<Waypoint>();
 
     
-    private Vector2Int[] directions = new[]
+    Vector2Int[] directions = new[]
     {
         Vector2Int.up,
         Vector2Int.right,
@@ -36,7 +36,7 @@ public class PathFinder : MonoBehaviour
         return path;
     }
 
-    private void CreatePath()
+    void CreatePath()
     {
         path.Add(finishPoint);
         Waypoint prevPoint = finishPoint.exploredFrom;
@@ -50,7 +50,7 @@ public class PathFinder : MonoBehaviour
         path.Reverse();
     }
     
-    private void PathFindAlgoritm()
+    void PathFindAlgoritm()
     {
         _queue.Enqueue(startPoint);
         while(_queue.Count > 0 && _isRunning == true)
@@ -63,7 +63,7 @@ public class PathFinder : MonoBehaviour
         
     }
 
-    private void CheckForEndPoint()
+    void CheckForEndPoint()
     {
         if (searchPoint == finishPoint)
         {
@@ -77,29 +77,23 @@ public class PathFinder : MonoBehaviour
         }
     }
 
-    private void ExploreNearPoints()
+    void ExploreNearPoints()
     {
         if (!_isRunning) { return; }
-        else
+        
+        foreach (Vector2Int direction in directions)
         {
-            foreach (Vector2Int direction in directions)
-            {
-                Vector2Int nearPointCoordinates = searchPoint.GetGridPos() + direction;
+            Vector2Int nearPointCoordinates = searchPoint.GetGridPos() + direction;
 
-                try
-                {
-                    Waypoint nearPoint = grid[nearPointCoordinates];
-                    AddPointToQueue(nearPoint);
-                }
-                catch
-                {
-                    //Debug.LogWarning($"Блок : {nearPointCoordinates} не существует!");
-                }
+            if(grid.ContainsKey(nearPointCoordinates)) 
+            {
+                Waypoint nearPoint = grid[nearPointCoordinates];
+                AddPointToQueue(nearPoint);
             }
         }
     }
 
-    private void AddPointToQueue(Waypoint nearPoint)
+    void AddPointToQueue(Waypoint nearPoint)
     {
         if (nearPoint.isExplored || _queue.Contains(nearPoint)) //если исследован или уже есть в очереди
         {
@@ -113,7 +107,7 @@ public class PathFinder : MonoBehaviour
         }
     }
     
-    private void LoadBlocks()
+    void LoadBlocks()
     {
         var waypoints = FindObjectsOfType<Waypoint>();
         foreach (Waypoint waypoint in waypoints)
@@ -130,7 +124,7 @@ public class PathFinder : MonoBehaviour
         }
     }
 
-    private void SetColorStartAndEnd()
+    void SetColorStartAndEnd()
     {
         startPoint.SetTopColor(Color.green);
         finishPoint.SetTopColor(Color.red);
