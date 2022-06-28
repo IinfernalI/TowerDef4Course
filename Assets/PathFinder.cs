@@ -7,13 +7,18 @@ public class PathFinder : MonoBehaviour
 {
     [SerializeField] private Waypoint startPoint;
     [SerializeField] private Waypoint finishPoint;
-    private Dictionary<Vector2Int, Waypoint> grid = new Dictionary<Vector2Int, Waypoint>();
+    
+    Dictionary<Vector2Int, Waypoint> grid = new Dictionary<Vector2Int, Waypoint>();
+    
+    Queue<Waypoint> _queue = new Queue<Waypoint>();
+    
+    bool _isRunning = true;
 
-    private Queue<Waypoint> _queue = new Queue<Waypoint>();
-    private bool _isRunning = true;
+    Waypoint searchPoint;
 
-    private Waypoint searchPoint;
+    List<Waypoint> path = new List<Waypoint>();
 
+    
     private Vector2Int[] directions = new[]
     {
         Vector2Int.up,
@@ -21,15 +26,31 @@ public class PathFinder : MonoBehaviour
         Vector2Int.down,
         Vector2Int.left
     };
-    void Start()
+
+    public List<Waypoint> GetPath()
     {
         LoadBlocks();
         SetColorStartAndEnd();
-        //ExploreNearPoints();
-        PathFind();
+        PathFindAlgoritm();
+        CreatePath();
+        return path;
     }
 
-    private void PathFind()
+    private void CreatePath()
+    {
+        path.Add(finishPoint);
+        Waypoint prevPoint = finishPoint.exploredFrom;
+        while (prevPoint != startPoint)
+        {
+            path.Add(prevPoint);
+            prevPoint.SetTopColor(Color.yellow);
+            prevPoint = prevPoint.exploredFrom;
+        }
+        path.Add(prevPoint);
+        path.Reverse();
+    }
+    
+    private void PathFindAlgoritm()
     {
         _queue.Enqueue(startPoint);
         while(_queue.Count > 0 && _isRunning == true)
@@ -38,7 +59,6 @@ public class PathFinder : MonoBehaviour
             searchPoint.isExplored = true;
             CheckForEndPoint();
             ExploreNearPoints();
-            //print("Поиск завершен?");
         }
         
     }
@@ -47,12 +67,12 @@ public class PathFinder : MonoBehaviour
     {
         if (searchPoint == finishPoint)
         {
-            print($"{searchPoint} являеться конечной точкой");
+            //print($"{searchPoint} являеться конечной точкой");
             _isRunning = false;
         }
         else
         {
-            print($"{searchPoint} не являеться последней точкой");
+            //print($"{searchPoint} не являеться последней точкой");
             _isRunning = true;
         }
     }
@@ -87,10 +107,9 @@ public class PathFinder : MonoBehaviour
         }
         else
         {
-            //nearPoint.SetTopColor(Color.yellow);
             _queue.Enqueue(nearPoint);
             nearPoint.exploredFrom = searchPoint;
-            print($"Добавить в очередь - {nearPoint}");
+            //print($"Добавить в очередь - {nearPoint}");
         }
     }
     
@@ -115,10 +134,5 @@ public class PathFinder : MonoBehaviour
     {
         startPoint.SetTopColor(Color.green);
         finishPoint.SetTopColor(Color.red);
-    }
-    
-    void Update()
-    {
-        
     }
 }

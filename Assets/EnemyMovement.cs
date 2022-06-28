@@ -2,25 +2,23 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 
 public class EnemyMovement : MonoBehaviour
 {
-    
-    [SerializeField] private List<Waypoint> waypoints;
-    
+    private PathFinder _pathFinder;
     void Start()
     {
-        PrintWaypointName();
-        /*InvokeRepeating("PrintWaypointName",0f,1f);*/
-        StartCoroutine(PrintWaypointName());
-        
+        _pathFinder = FindObjectOfType<PathFinder>();
+        var path = _pathFinder.GetPath();
+        StartCoroutine(enemyMove(path));
     }
 
-    IEnumerator PrintWaypointName()
+    IEnumerator enemyMove(List<Waypoint> path)
     {
         Debug.Log("Enemy start running");
-        foreach (Waypoint waypoint in waypoints)
+        foreach (Waypoint waypoint in path)
         {
             transform.position = waypoint.transform.position;
             Debug.Log("Enemy go to - " + waypoint);

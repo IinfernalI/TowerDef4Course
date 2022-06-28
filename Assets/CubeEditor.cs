@@ -26,7 +26,7 @@ public class CubeEditor : MonoBehaviour
         int gridSize = _waypoint.GetGridSize();
         //берем компонент потомка текст меш
         TextMesh lebel = GetComponentInChildren<TextMesh>();
-        string labelName = "X-" + _waypoint.GetGridPos().x + "," + "Z-" + _waypoint.GetGridPos().y;
+        string labelName = "X" + _waypoint.GetGridPos().x + "," + "Z" + _waypoint.GetGridPos().y;
         lebel.text = labelName; //зарисовка самих кубов
         gameObject.name = labelName; //зарисовка каждого куба в меню
     }
