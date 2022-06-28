@@ -12,13 +12,10 @@ public class PathFinder : MonoBehaviour
     private Queue<Waypoint> _queue = new Queue<Waypoint>();
     private bool _isRunning = true;
 
+    private Waypoint searchPoint;
+
     private Vector2Int[] directions = new[]
     {
-        /*new Vector2Int(0,10),
-        new Vector2Int(10,0),
-        new Vector2Int(0,-10),
-        new Vector2Int(-10,0),*/
-        
         Vector2Int.up,
         Vector2Int.right,
         Vector2Int.down,
@@ -37,16 +34,16 @@ public class PathFinder : MonoBehaviour
         _queue.Enqueue(startPoint);
         while(_queue.Count > 0 && _isRunning == true)
         {
-            Waypoint searchPoint = _queue.Dequeue();
+            searchPoint = _queue.Dequeue();
             searchPoint.isExplored = true;
-            CheckForEndPoint(searchPoint);
-            ExploreNearPoints(searchPoint);
-            print("Поиск завершен?");
+            CheckForEndPoint();
+            ExploreNearPoints();
+            //print("Поиск завершен?");
         }
         
     }
 
-    private void CheckForEndPoint(Waypoint searchPoint)
+    private void CheckForEndPoint()
     {
         if (searchPoint == finishPoint)
         {
@@ -60,36 +57,39 @@ public class PathFinder : MonoBehaviour
         }
     }
 
-    private void ExploreNearPoints(Waypoint from)
+    private void ExploreNearPoints()
     {
         if (!_isRunning) { return; }
         else
         {
-            
             foreach (Vector2Int direction in directions)
             {
-                Vector2Int nearPointCoordinates = from.GetGridPos() + direction;
-               
+                Vector2Int nearPointCoordinates = searchPoint.GetGridPos() + direction;
+
                 try
                 {
                     Waypoint nearPoint = grid[nearPointCoordinates];
                     AddPointToQueue(nearPoint);
                 }
-                catch { Debug.LogWarning($"Блок : {nearPointCoordinates} не существует!"); }
+                catch
+                {
+                    //Debug.LogWarning($"Блок : {nearPointCoordinates} не существует!");
+                }
             }
         }
     }
 
     private void AddPointToQueue(Waypoint nearPoint)
     {
-        if (nearPoint.isExplored)
+        if (nearPoint.isExplored || _queue.Contains(nearPoint)) //если исследован или уже есть в очереди
         {
             return;
         }
         else
         {
-            nearPoint.SetTopColor(Color.yellow);
+            //nearPoint.SetTopColor(Color.yellow);
             _queue.Enqueue(nearPoint);
+            nearPoint.exploredFrom = searchPoint;
             print($"Добавить в очередь - {nearPoint}");
         }
     }
@@ -100,7 +100,7 @@ public class PathFinder : MonoBehaviour
         foreach (Waypoint waypoint in waypoints)
         {
             Vector2Int gridPos = waypoint.GetGridPos();
-            if (grid.ContainsKey(gridPos))
+            if (grid.ContainsKey(gridPos)) 
             {
                 Debug.LogWarning("Повтор" + waypoint);
             }

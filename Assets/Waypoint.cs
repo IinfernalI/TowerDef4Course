@@ -1,15 +1,26 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 public class Waypoint : MonoBehaviour
 {
+    /*[SerializeField] private Color exploredColor = Color.yellow;*/
+    public Waypoint exploredFrom;
     public bool isExplored = false;
-    
     private Vector2Int gridPos;
     
     //размер сетки 
     private const int gridSize = 10;
+
+    public void Update()
+    {
+        /*if (isExplored)
+        {
+            SetTopColor(exploredColor);
+        }*/
+    }
 
     public int GetGridSize()
     {
