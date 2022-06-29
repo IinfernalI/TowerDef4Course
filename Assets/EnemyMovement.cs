@@ -13,16 +13,19 @@ public class EnemyMovement : MonoBehaviour
     {
         _pathFinder = FindObjectOfType<PathFinder>();
         var path = _pathFinder.GetPath();
-        StartCoroutine(enemyMove(path));
+        StartCoroutine(EnemyMove(path));
+
+        /*PathFinder _pathFinder2 = gameObject.GetComponent<PathFinder>();
+        var path2 = _pathFinder2.GetPath();       //спросить у сереги на сколько этот код лучше или хуже 
+        StartCoroutine(EnemyMove(path2));*/         //и нарушение зависимостей если одеть на обьект 2 скрипт
     }
 
-    IEnumerator enemyMove(List<Waypoint> path)
+    IEnumerator EnemyMove(List<Waypoint> path)
     {
         Debug.Log("Enemy start running");
         foreach (Waypoint waypoint in path)
         {
             transform.position = waypoint.transform.position;
-            Debug.Log("Enemy go to - " + waypoint);
             yield return new WaitForSeconds(1f);
         }
         Debug.Log("Enemy stoped");

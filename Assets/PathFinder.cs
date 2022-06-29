@@ -9,11 +9,9 @@ public class PathFinder : MonoBehaviour
     [SerializeField] private Waypoint finishPoint;
     
     Dictionary<Vector2Int, Waypoint> grid = new Dictionary<Vector2Int, Waypoint>();
-    
     Queue<Waypoint> _queue = new Queue<Waypoint>();
     
     bool _isRunning = true;
-
     Waypoint searchPoint;
 
     List<Waypoint> path = new List<Waypoint>();
@@ -67,12 +65,10 @@ public class PathFinder : MonoBehaviour
     {
         if (searchPoint == finishPoint)
         {
-            //print($"{searchPoint} являеться конечной точкой");
             _isRunning = false;
         }
         else
         {
-            //print($"{searchPoint} не являеться последней точкой");
             _isRunning = true;
         }
     }
@@ -103,7 +99,6 @@ public class PathFinder : MonoBehaviour
         {
             _queue.Enqueue(nearPoint);
             nearPoint.exploredFrom = searchPoint;
-            //print($"Добавить в очередь - {nearPoint}");
         }
     }
     
