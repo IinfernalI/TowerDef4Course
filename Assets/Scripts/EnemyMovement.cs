@@ -14,7 +14,7 @@ public class EnemyMovement : MonoBehaviour
     {
         _pathFinder = FindObjectOfType<PathFinder>();
         var path = _pathFinder.GetPath();
-        StartCoroutine(EnemyMove(path.Select(Selector).ToList())); //i => i.transform
+        StartCoroutine(EnemyMove(path.Select(Selector).ToList())); //i => i.transform обсудить у сереги
 
         /*PathFinder _pathFinder2 = gameObject.GetComponent<PathFinder>();
         var path2 = _pathFinder2.GetPath();       //спросить у сереги на сколько этот код лучше или хуже 
@@ -33,7 +33,7 @@ public class EnemyMovement : MonoBehaviour
         {
             transform.LookAt(waypoint);
             transform.position = waypoint.position;
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(1.5f);
         }
         Debug.Log("Enemy stoped");
     }
