@@ -5,13 +5,12 @@ using UnityEngine;
 
 public class EnemyDamage : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] int health;
     void Start()
     {
         
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         
@@ -19,6 +18,21 @@ public class EnemyDamage : MonoBehaviour
 
     private void OnParticleCollision(GameObject other)
     {
-        print("Попадание"); 
+        print("Попадание");
+        HitDamage();
+        CheckOnDestroyEnemy();
+    }
+
+    private void CheckOnDestroyEnemy()
+    {
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+    
+    private void HitDamage()
+    {
+        health -= 1;
     }
 }
