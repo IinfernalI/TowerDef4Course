@@ -25,13 +25,22 @@ public class PathFinder : MonoBehaviour
         Vector2Int.left
     };
 
+    
     public List<Waypoint> GetPath()
+    {
+        if (path.Count == 0)
+        {
+            CalculatePath();
+        }
+        return path;
+    }
+
+    private void CalculatePath()
     {
         LoadBlocks();
         SetColorStartAndEnd();
         PathFindAlgoritm();
         CreatePath();
-        return path;
     }
 
     void CreatePath()
