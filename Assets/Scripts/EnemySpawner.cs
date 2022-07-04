@@ -16,7 +16,7 @@ public class EnemySpawner : MonoBehaviour
         while (true)
         {
             //Instantiate(myPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-            Instantiate(enemyPrefab, new Vector3(0,0,0), Quaternion.identity);
+            Instantiate(enemyPrefab, transform.position, Quaternion.identity);
             yield return new WaitForSeconds(spawnInterval);
         }
     }
