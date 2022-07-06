@@ -28,13 +28,11 @@ public class EnemyMovement : MonoBehaviour
 
     IEnumerator EnemyMove(List<Transform> path)
     {
-        //Debug.Log("Enemy start running");
         foreach (var waypoint in path)
         {
             transform.LookAt(waypoint);
             transform.position = waypoint.position;
             yield return new WaitForSeconds(1.5f);
         }
-        //Debug.Log("Enemy stoped");
     }
 }

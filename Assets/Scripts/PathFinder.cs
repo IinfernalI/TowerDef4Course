@@ -38,7 +38,7 @@ public class PathFinder : MonoBehaviour
     private void CalculatePath()
     {
         LoadBlocks();
-        SetColorStartAndEnd();
+        //SetColorStartAndEnd();
         PathFindAlgoritm();
         CreatePath();
     }
@@ -50,7 +50,7 @@ public class PathFinder : MonoBehaviour
         while (prevPoint != startPoint)
         {
             path.Add(prevPoint);
-            prevPoint.SetTopColor(Color.yellow);
+            //prevPoint.SetTopColor(Color.yellow);
             prevPoint = prevPoint.exploredFrom;
         }
         path.Add(prevPoint);
@@ -128,9 +128,9 @@ public class PathFinder : MonoBehaviour
         }
     }
 
-    void SetColorStartAndEnd()
+    /*void SetColorStartAndEnd()
     {
         startPoint.SetTopColor(Color.green);
         finishPoint.SetTopColor(Color.red);
-    }
+    }*/
 }

@@ -7,16 +7,7 @@ using UnityEngine;
 public class EnemyDamage : MonoBehaviour
 {
     [SerializeField] int health;
-    void Start()
-    {
-        
-    }
     
-    void Update()
-    {
-        
-    }
-
     private void OnParticleCollision(GameObject other)
     {
         print("Попадание");

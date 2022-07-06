@@ -6,7 +6,6 @@ using UnityEngine;
 public class Tower : MonoBehaviour
 {
     [SerializeField] private Transform towerTop;
-
     [SerializeField] private Transform targetEnemy;
 
     [SerializeField] private float shootRange;

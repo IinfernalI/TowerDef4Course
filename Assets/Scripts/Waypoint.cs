@@ -4,14 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
+[SelectionBase]
+
 public class Waypoint : MonoBehaviour
 {
     public Waypoint exploredFrom;
     public bool isExplored = false;
     Vector2Int gridPos;
     
-    //размер сетки 
-    const int gridSize = 10;
+    const int gridSize = 10; //размер сетки 
     
     public int GetGridSize()
     {
@@ -31,5 +32,9 @@ public class Waypoint : MonoBehaviour
         MeshRenderer topMeshRenderer = transform.Find("Top").GetComponent<MeshRenderer>();
         topMeshRenderer.material.color = color;
     }
-    
+
+    private void OnMouseOver()
+    {
+        Debug.Log("Mouse is over");
+    }
 }

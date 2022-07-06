@@ -31,7 +31,7 @@ public class CubeEditor : MonoBehaviour
     {
         TextMesh lebel = GetComponentInChildren<TextMesh>(); //берем компонент потомка текст меш
         string labelName = "X" + _waypoint.GetGridPos().x + "," + "Z" + _waypoint.GetGridPos().y;
-        lebel.text = labelName; //зарисовка самих кубов
+        lebel.text = labelName; //зарисовка самих лейблов кубов
         gameObject.name = labelName; //зарисовка каждого куба в меню
     }
 
