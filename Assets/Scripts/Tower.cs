@@ -7,7 +7,7 @@ public class Tower : MonoBehaviour
 {
     [SerializeField] private Transform towerTop;
     [SerializeField] private Transform targetEnemy;
-
+    
     [SerializeField] private float shootRange;
 
     [SerializeField] private ParticleSystem bulletParticle;
@@ -22,6 +22,11 @@ public class Tower : MonoBehaviour
             Fire();
         }
         else { Shoot(false); }
+    }
+
+    public void DestroyTuttet()
+    {
+        Destroy(gameObject);
     }
 
     private void CloseEnemy()

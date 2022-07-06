@@ -61,6 +61,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   exploredFrom: {fileID: 0}
   isExplored: 0
+  isPlaceble: 1
+  _towerPrefab: {fileID: 32246675, guid: ce6d6802f57b51f40b677bdd0bc3c342, type: 3}
 --- !u!65 &1773860200
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -237,7 +239,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7524818287529372432}
-  m_Text: X4,Z0
+  m_Text: X5,Z1
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1

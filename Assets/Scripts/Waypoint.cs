@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
+using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 
 [SelectionBase]
@@ -10,11 +12,14 @@ using UnityEngine.UIElements;
 public class Waypoint : MonoBehaviour
 {
     public Waypoint exploredFrom;
+    
     public bool isExplored = false;
     [SerializeField] public bool isPlaceble = true;
+    [SerializeField] private Tower _towerPrefab;
+    
+    private Tower thisTower;
     
     Vector2Int gridPos; //убрать позже
-    
     const int gridSize = 10;
     
     public int GetGridSize()
@@ -38,14 +43,29 @@ public class Waypoint : MonoBehaviour
 
     private void OnMouseOver()
     {
-        if (Input.GetMouseButtonDown(0) && isPlaceble)
+        if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log($"Можем поставить башню: {gameObject}");
+            if (isPlaceble)
+            {
+                thisTower = Instantiate(_towerPrefab, transform.position, Quaternion.identity);
+                isPlaceble = false;
+            }
+            else
+            {
+                Debug.Log("Не можем поставить башню");
+            }
         }
-        else if (Input.GetMouseButtonDown(0) && !isPlaceble)
+        else if (Input.GetMouseButtonDown(1))
         {
-            Debug.Log("Не можем поставить башню");
+            if (thisTower)
+            {
+                thisTower.DestroyTuttet();
+                isPlaceble = true;
+            }
+            else
+            {
+                Debug.Log("У нас нет турели сдесь");
+            }
         }
-        
     }
 }
