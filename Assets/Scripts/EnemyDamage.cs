@@ -8,6 +8,8 @@ public class EnemyDamage : MonoBehaviour
 {
     [SerializeField] int health;
     
+    [SerializeField] private ParticleSystem hitParticle;
+    [SerializeField] private ParticleSystem deathParticle;
     private void OnParticleCollision(GameObject other)
     {
         print("Попадание");
@@ -19,12 +21,15 @@ public class EnemyDamage : MonoBehaviour
     {
         if (health <= 0)
         {
+            ParticleSystem deadParticle = Instantiate(deathParticle, transform.position, Quaternion.identity);
+            deadParticle.Play();
             Destroy(gameObject);
         }
     }
     
     private void HitDamage()
     {
+        hitParticle.Play();
         health -= 1;
     }
 }
