@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
+using UnityEngine.UIElements;
 
 [SelectionBase]
 
@@ -10,9 +11,11 @@ public class Waypoint : MonoBehaviour
 {
     public Waypoint exploredFrom;
     public bool isExplored = false;
-    Vector2Int gridPos;
+    [SerializeField] public bool isPlaceble = true;
     
-    const int gridSize = 10; //размер сетки 
+    Vector2Int gridPos; //убрать позже
+    
+    const int gridSize = 10;
     
     public int GetGridSize()
     {
@@ -35,6 +38,14 @@ public class Waypoint : MonoBehaviour
 
     private void OnMouseOver()
     {
-        Debug.Log("Mouse is over");
+        if (Input.GetMouseButtonDown(0) && isPlaceble)
+        {
+            Debug.Log($"Можем поставить башню: {gameObject}");
+        }
+        else if (Input.GetMouseButtonDown(0) && !isPlaceble)
+        {
+            Debug.Log("Не можем поставить башню");
+        }
+        
     }
 }

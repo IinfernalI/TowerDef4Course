@@ -38,25 +38,29 @@ public class PathFinder : MonoBehaviour
     private void CalculatePath()
     {
         LoadBlocks();
-        //SetColorStartAndEnd();
         PathFindAlgoritm();
         CreatePath();
     }
 
     void CreatePath()
     {
-        path.Add(finishPoint);
+        AddPointToPath(finishPoint);
         Waypoint prevPoint = finishPoint.exploredFrom;
         while (prevPoint != startPoint)
         {
-            path.Add(prevPoint);
-            //prevPoint.SetTopColor(Color.yellow);
+            AddPointToPath(prevPoint);
             prevPoint = prevPoint.exploredFrom;
         }
-        path.Add(prevPoint);
+        AddPointToPath(prevPoint);
         path.Reverse();
     }
-    
+
+    private void AddPointToPath(Waypoint waypoint)
+    {
+        path.Add(waypoint);
+        waypoint.isPlaceble = false;
+    }
+
     void PathFindAlgoritm()
     {
         _queue.Enqueue(startPoint);

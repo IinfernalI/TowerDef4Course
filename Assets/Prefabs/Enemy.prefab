@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1262231078}
   - component: {fileID: 1262231077}
   - component: {fileID: 1262231079}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,15 +102,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3326891093629767162, guid: e26d6849b189e2846986fa1d9ef67f01, type: 3}
       propertyPath: m_LocalScale.x
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3326891093629767162, guid: e26d6849b189e2846986fa1d9ef67f01, type: 3}
       propertyPath: m_LocalScale.y
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3326891093629767162, guid: e26d6849b189e2846986fa1d9ef67f01, type: 3}
       propertyPath: m_LocalScale.z
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3326891093629767162, guid: e26d6849b189e2846986fa1d9ef67f01, type: 3}
       propertyPath: m_LocalPosition.x
@@ -155,6 +155,10 @@ PrefabInstance:
     - target: {fileID: 5808889996688006849, guid: e26d6849b189e2846986fa1d9ef67f01, type: 3}
       propertyPath: m_Name
       value: Enemy_body
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808889996688006849, guid: e26d6849b189e2846986fa1d9ef67f01, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e26d6849b189e2846986fa1d9ef67f01, type: 3}
