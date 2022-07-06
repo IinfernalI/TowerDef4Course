@@ -15,10 +15,7 @@ public class Waypoint : MonoBehaviour
     
     public bool isExplored = false;
     [SerializeField] public bool isPlaceble = true;
-    [SerializeField] private Tower _towerPrefab;
-    
-    private Tower thisTower;
-    
+
     Vector2Int gridPos; //убрать позже
     const int gridSize = 10;
     
@@ -47,24 +44,11 @@ public class Waypoint : MonoBehaviour
         {
             if (isPlaceble)
             {
-                thisTower = Instantiate(_towerPrefab, transform.position, Quaternion.identity);
-                isPlaceble = false;
+                FindObjectOfType<TowerFactory>().AddTower(this);
             }
             else
             {
                 Debug.Log("Не можем поставить башню");
-            }
-        }
-        else if (Input.GetMouseButtonDown(1))
-        {
-            if (thisTower)
-            {
-                thisTower.DestroyTuttet();
-                isPlaceble = true;
-            }
-            else
-            {
-                Debug.Log("У нас нет турели сдесь");
             }
         }
     }

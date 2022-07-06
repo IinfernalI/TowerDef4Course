@@ -24,10 +24,10 @@ public class Tower : MonoBehaviour
         else { Shoot(false); }
     }
 
-    public void DestroyTuttet()
+    /*public void DestroyTuttet()
     {
         Destroy(gameObject);
-    }
+    }*/
 
     private void CloseEnemy()
     {
