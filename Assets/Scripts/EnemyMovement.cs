@@ -8,10 +8,17 @@ using UnityEngine.Serialization;
 
 public class EnemyMovement : MonoBehaviour
 {
+    [Range(0,5)][SerializeField] private float speed;
+    
     PathFinder _pathFinder;
+
+    private EnemyDamage _enemyDamage;
+    
+    [SerializeField] private ParticleSystem castleDamageParticle;
     
     void Start()
     {
+        _enemyDamage = GetComponentInChildren<EnemyDamage>();
         _pathFinder = FindObjectOfType<PathFinder>();
         var path = _pathFinder.GetPath();
         StartCoroutine(EnemyMove(path.Select(Selector).ToList())); //i => i.transform обсудить у сереги
@@ -32,7 +39,8 @@ public class EnemyMovement : MonoBehaviour
         {
             transform.LookAt(waypoint);
             transform.position = waypoint.position;
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(speed);
         }
+        _enemyDamage.DestroyEnemy(castleDamageParticle);
     }
 }

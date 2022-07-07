@@ -6,27 +6,27 @@ using UnityEngine;
 [SelectionBase]
 public class EnemyDamage : MonoBehaviour
 {
-    [SerializeField] int health;
+    [SerializeField] public int health;
     
     [SerializeField] private ParticleSystem hitParticle;
     [SerializeField] private ParticleSystem deathParticle;
+    
     private void OnParticleCollision(GameObject other)
     {
-        print("Попадание");
         HitDamage();
-        CheckOnDestroyEnemy();
-    }
-
-    private void CheckOnDestroyEnemy()
-    {
         if (health <= 0)
         {
-            ParticleSystem deadParticle = Instantiate(deathParticle, transform.position, Quaternion.identity);
-            deadParticle.Play();
-            float deadParticleDuration = deadParticle.main.duration;
-            Destroy(deadParticle.gameObject,deadParticleDuration);
-            Destroy(gameObject);
+            DestroyEnemy(deathParticle);
         }
+    }
+
+    public void DestroyEnemy(ParticleSystem particleFX)
+    {
+        ParticleSystem deadParticle = Instantiate(particleFX, transform.position, Quaternion.identity);
+        deadParticle.Play();
+        float deadParticleDuration = deadParticle.main.duration;
+        Destroy(deadParticle.gameObject,deadParticleDuration); 
+        Destroy(gameObject);
     }
     
     private void HitDamage()
