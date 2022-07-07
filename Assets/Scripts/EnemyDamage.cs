@@ -23,6 +23,8 @@ public class EnemyDamage : MonoBehaviour
         {
             ParticleSystem deadParticle = Instantiate(deathParticle, transform.position, Quaternion.identity);
             deadParticle.Play();
+            float deadParticleDuration = deadParticle.main.duration;
+            Destroy(deadParticle.gameObject,deadParticleDuration);
             Destroy(gameObject);
         }
     }
