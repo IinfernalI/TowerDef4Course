@@ -1,21 +1,21 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 public class TowerFactory : MonoBehaviour
 {
-    
     [SerializeField] private Tower _towerPrefab;
-
     [SerializeField] private int towerLimit = 4;
-
-    private int towerCounts;
+    
+    private Queue<Tower> _towersQueue = new Queue<Tower>();
+    
 
     public void AddTower(Waypoint waypoint)
     {
-        if (towerCounts < towerLimit)
+        if (_towersQueue.Count < towerLimit)
         {
             InstantiateNewTower(waypoint);
         }
@@ -24,16 +24,23 @@ public class TowerFactory : MonoBehaviour
             MoveTowerToNewPosition(waypoint);
         }
     }
-
-    private void MoveTowerToNewPosition(Waypoint waypoint)
-    {
-        Debug.Log("Передвинуть башню");
-    }
-
+    
     private void InstantiateNewTower(Waypoint waypoint)
     {
-        Instantiate(_towerPrefab, waypoint.transform.position, Quaternion.identity);
+        Tower thisTower = Instantiate(_towerPrefab, waypoint.transform.position, Quaternion.identity);
+        thisTower.transform.parent = this.transform;
+        thisTower.prevWaypoint = waypoint;
         waypoint.isPlaceble = false;
-        towerCounts++;
+        _towersQueue.Enqueue(thisTower);
+    }
+    
+    private void MoveTowerToNewPosition(Waypoint waypoint)
+    {
+        Tower swapTower = _towersQueue.Dequeue();
+        swapTower.transform.position = waypoint.transform.position;
+        waypoint.isPlaceble = false;
+        swapTower.prevWaypoint.isPlaceble = true;
+        swapTower.prevWaypoint = waypoint;
+        _towersQueue.Enqueue(swapTower);
     }
 }

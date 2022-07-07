@@ -12,6 +12,8 @@ public class Tower : MonoBehaviour
 
     [SerializeField] private ParticleSystem bulletParticle;
 
+    [SerializeField] public Waypoint prevWaypoint;
+
     void Update()
     {
         CloseEnemy();
