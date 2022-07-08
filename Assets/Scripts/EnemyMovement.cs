@@ -44,7 +44,8 @@ public class EnemyMovement : MonoBehaviour
             yield return new WaitForSeconds(speed);
             transform.position = waypoint.position;
         }
-        _enemyDamage.DestroyEnemy(castleDamageParticle);
+        _enemyDamage.DestroyEnemy(castleDamageParticle, false);
         _castle.DamageCastle();
+        
     }
 }

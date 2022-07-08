@@ -10,13 +10,15 @@ public class EnemyDamage : MonoBehaviour
     [SerializeField] public int health;
     [SerializeField] private ParticleSystem hitParticle;
     [SerializeField] private ParticleSystem deathParticle;
+    [SerializeField] private AudioClip hitEnemySoundFX;
     private Text scoreText;
-    private int currentScore;
-    [SerializeField] private int scoreOnDead = 150;
+    private int currentScore; // ошибка с текстом и поиск ...
+    private AudioSource _audioSource;
 
     private void Start()
     {
         scoreText = GameObject.Find("Score").GetComponent<Text>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     private void OnParticleCollision(GameObject other)
@@ -24,24 +26,30 @@ public class EnemyDamage : MonoBehaviour
         HitDamage();
         if (health <= 0)
         {
-            DestroyEnemy(deathParticle);
+            DestroyEnemy(deathParticle, true);
         }
     }
 
-    public void DestroyEnemy(ParticleSystem particleFX)
+    public void DestroyEnemy(ParticleSystem particleFX,bool addScore)
     {
-        currentScore = Convert.ToInt32(scoreText);
-        currentScore++;
-        scoreText.text = currentScore.ToString();
+        if (addScore)
+        {
+            currentScore = int.Parse(scoreText.text);
+            currentScore++;
+            scoreText.text = currentScore.ToString();
+        }
+
         ParticleSystem deadParticle = Instantiate(particleFX, transform.position, Quaternion.identity);
         deadParticle.Play();
         float deadParticleDuration = deadParticle.main.duration;
+        
         Destroy(deadParticle.gameObject,deadParticleDuration); 
         Destroy(gameObject);
     }
     
     private void HitDamage()
     {
+        _audioSource.PlayOneShot(hitEnemySoundFX);
         hitParticle.Play();
         health -= 1;
     }
