@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Debug = System.Diagnostics.Debug;
 
 [SelectionBase]
 public class EnemyDamage : MonoBehaviour
@@ -11,6 +12,7 @@ public class EnemyDamage : MonoBehaviour
     [SerializeField] private ParticleSystem hitParticle;
     [SerializeField] private ParticleSystem deathParticle;
     [SerializeField] private AudioClip hitEnemySoundFX;
+    [SerializeField] private AudioClip deathEnemySoundFX;
     private Text scoreText;
     private int currentScore; // ошибка с текстом и поиск ...
     private AudioSource _audioSource;
@@ -43,6 +45,8 @@ public class EnemyDamage : MonoBehaviour
         deadParticle.Play();
         float deadParticleDuration = deadParticle.main.duration;
         
+        AudioSource.PlayClipAtPoint(deathEnemySoundFX, Camera.main.transform.position);
+
         Destroy(deadParticle.gameObject,deadParticleDuration); 
         Destroy(gameObject);
     }

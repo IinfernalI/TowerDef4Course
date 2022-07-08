@@ -96,6 +96,7 @@ MonoBehaviour:
   hitParticle: {fileID: 6690729212186623700}
   deathParticle: {fileID: 198537984209914932, guid: 1a51bfda454239a41afb7dee687c6ac0, type: 3}
   hitEnemySoundFX: {fileID: 8300000, guid: db24e8ebb6a5e994fb28d3e80bd42d6c, type: 3}
+  deathEnemySoundFX: {fileID: 8300000, guid: 1f671b78262e46b4eb92178cd4fe110e, type: 3}
 --- !u!82 &3654643000649004818
 AudioSource:
   m_ObjectHideFlags: 0
