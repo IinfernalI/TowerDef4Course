@@ -48,8 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a85ba2c8d1557d49ad6296a4d9e14fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.75
   castleDamageParticle: {fileID: 7099339715629506840, guid: e25f319284cb16c499cf30f4ed934935, type: 3}
+  speed: 1
 --- !u!54 &1262231078
 Rigidbody:
   m_ObjectHideFlags: 0

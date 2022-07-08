@@ -37,10 +37,13 @@ public class TowerFactory : MonoBehaviour
     private void MoveTowerToNewPosition(Waypoint waypoint)
     {
         Tower swapTower = _towersQueue.Dequeue();
+        
+        
         swapTower.transform.position = waypoint.transform.position;
-        waypoint.isPlaceble = false;
         swapTower.prevWaypoint.isPlaceble = true;
+        waypoint.isPlaceble = false;
         swapTower.prevWaypoint = waypoint;
+
         _towersQueue.Enqueue(swapTower);
     }
 }

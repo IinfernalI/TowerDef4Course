@@ -8,19 +8,22 @@ using UnityEngine.Serialization;
 
 public class EnemyMovement : MonoBehaviour
 {
+    private Castle _castle;
+    //[SerializeField] private Castle _castle; так же лучше?\\\\\\\\\\
+    [SerializeField] private ParticleSystem castleDamageParticle;
+    
     [Range(0,5)][SerializeField] private float speed;
     
     PathFinder _pathFinder;
 
     private EnemyDamage _enemyDamage;
     
-    [SerializeField] private ParticleSystem castleDamageParticle;
-    
     void Start()
     {
-        _enemyDamage = GetComponentInChildren<EnemyDamage>();
+        _castle = FindObjectOfType<Castle>();
+        _enemyDamage = GetComponent<EnemyDamage>();
         _pathFinder = FindObjectOfType<PathFinder>();
-        var path = _pathFinder.GetPath();
+        List<Waypoint> path = _pathFinder.GetPath();
         StartCoroutine(EnemyMove(path.Select(Selector).ToList())); //i => i.transform обсудить у сереги
 
         /*PathFinder _pathFinder2 = gameObject.GetComponent<PathFinder>();
@@ -38,9 +41,10 @@ public class EnemyMovement : MonoBehaviour
         foreach (var waypoint in path)
         {
             transform.LookAt(waypoint);
-            transform.position = waypoint.position;
             yield return new WaitForSeconds(speed);
+            transform.position = waypoint.position;
         }
         _enemyDamage.DestroyEnemy(castleDamageParticle);
+        _castle.DamageCastle();
     }
 }
