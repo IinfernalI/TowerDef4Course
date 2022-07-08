@@ -13,11 +13,15 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private ParticleSystem castleDamageParticle;
     
     [Range(0,5)][SerializeField] private float speed;
+    [Range(0,5)][SerializeField] private float moveStep;
     
-    PathFinder _pathFinder;
+    private PathFinder _pathFinder;
 
     private EnemyDamage _enemyDamage;
+
+    private Vector3 targetPosition;
     
+
     void Start()
     {
         _castle = FindObjectOfType<Castle>();
@@ -30,6 +34,11 @@ public class EnemyMovement : MonoBehaviour
         var path2 = _pathFinder2.GetPath();       //спросить у сереги на сколько этот код лучше или хуже 
         StartCoroutine(EnemyMove(path2));*/         //и нарушение зависимостей если одеть на обьект 2 скрипт
     }
+    
+    private void Update()
+    {
+        transform.position = Vector3.Lerp(this.transform.position,targetPosition,Time.deltaTime * moveStep);
+    }
 
     private Transform Selector(Waypoint waypoint)
     {
@@ -41,11 +50,10 @@ public class EnemyMovement : MonoBehaviour
         foreach (var waypoint in path)
         {
             transform.LookAt(waypoint);
+            targetPosition = waypoint.transform.position;
             yield return new WaitForSeconds(speed);
-            transform.position = waypoint.position;
         }
         _enemyDamage.DestroyEnemy(castleDamageParticle, false);
         _castle.DamageCastle();
-        
     }
 }

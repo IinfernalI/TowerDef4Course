@@ -50,7 +50,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   castleDamageParticle: {fileID: 7099339715629506840, guid: e25f319284cb16c499cf30f4ed934935, type: 3}
-  speed: 1
+  speed: 0.8
+  moveStep: 1
 --- !u!54 &1262231078
 Rigidbody:
   m_ObjectHideFlags: 0
