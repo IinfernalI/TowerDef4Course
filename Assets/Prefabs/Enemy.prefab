@@ -94,6 +94,8 @@ MonoBehaviour:
   health: 6
   hitParticle: {fileID: 6690729212186623700}
   deathParticle: {fileID: 198537984209914932, guid: 1a51bfda454239a41afb7dee687c6ac0, type: 3}
+  scoreText: {fileID: 0}
+  scoreOnDead: 150
 --- !u!1001 &445537531084530209
 PrefabInstance:
   m_ObjectHideFlags: 0
